@@ -14,7 +14,7 @@ Then we can step into project's folder:
 
 Now if we configured Docker properly, we can use a command below:
 
-<i> docker image build t dt-app:<image-tag> . </i>
+<i> docker image build -t dt-app:\<image-tag\> . </i>
 
 ### Description for config files
 
