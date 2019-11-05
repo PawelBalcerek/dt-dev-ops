@@ -6,7 +6,7 @@ This folder contains elements that we need to build or configure dt-app within D
 
 Firstly, we need to get dt-app project:
 
-<i> git@github.com:PawelBalcerek/dt-app.git </i>
+<i> git clone https://github.com/PawelBalcerek/dt-app.git </i>
 
 Then we can step into project's folder:
 
