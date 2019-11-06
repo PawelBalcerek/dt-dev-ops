@@ -1,0 +1,39 @@
+version: "3.7"
+services:
+    db:
+        image: postgres:11-alpine
+        environment:
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=postgres123
+        ports:
+            - 5432:5432
+        volumes:
+            - db-data:/var/lib/postgresql/data
+        networks:
+            bridge:
+            default:
+                aliases:
+                    - postgres
+    dt-api:
+        image: pawbal96/dt-api-java
+        ports:
+            - 8080:8080
+        networks:
+            - bridge
+            - default
+        volumes:
+                - /tmp/dt-dev-ops/dt-api-java/configs/application.properties:/app/application.properties
+    dt-app:
+        image: pawbal96/dt-app
+        ports:
+            - 80:8080
+        networks:
+            - bridge
+            - default
+volumes:
+    db-data:
+networks:
+    bridge:
+        external: true
+        name: bridge
+    default:
