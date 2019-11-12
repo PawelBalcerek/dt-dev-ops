@@ -17,18 +17,28 @@ services:
 
     dt-api:
         image: pawbal96/dt-api-net
-        ports:
-            - 8080:80
+        labels:
+            - "traefik.http.routers.dt-api.rule=PathPrefix(`/api`, `/swagger`)"
         networks:
             - bridge
             - default
 
     dt-app:
         image: pawbal96/dt-app
-        ports:
-            - 80:8080
+        labels:
+            - "traefik.http.routers.dt-app.rule=PathPrefix(`/`)"    
         networks:
             - bridge
+
+    reverse-proxy:
+        image: traefik:v2.0
+        ports:
+            - 80:80
+            - 8080:8080
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+        command: 
+            - --providers.docker
 
 volumes:
     db-net-data:
