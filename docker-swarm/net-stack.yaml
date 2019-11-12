@@ -8,7 +8,7 @@ services:
         ports:
             - 5432:5432
         volumes:
-            - db-java-data:/var/lib/postgresql/data
+            - db-net-data:/var/lib/postgresql/data
         networks:
             bridge:
             default:
@@ -16,15 +16,12 @@ services:
                     - postgres
 
     dt-api:
-        image: pawbal96/dt-api-java
+        image: pawbal96/dt-api-net
         ports:
-            - 8080:8080
+            - 8080:80
         networks:
             - bridge
             - default
-        configs:
-            - source: properties
-              target: /app/application.properties
 
     dt-app:
         image: pawbal96/dt-app
@@ -34,13 +31,9 @@ services:
             - bridge
 
 volumes:
-    db-java-data:
+    db-net-data:
 networks:
     bridge:
         external: true
         name: bridge
     default:
-configs:
-    properties:
-        external: true
-        name: dt-java-api-properties
