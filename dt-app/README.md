@@ -18,4 +18,22 @@ Now if we configured Docker properly, we can use a command below:
 
 ### Description for config files
 
-[Empty for now...]
+### How to import configs ?
+
+Get in the config directory:
+
+```shell script
+cd config
+```
+
+Create a config within Docker:
+
+```shell script
+docker config create <config-name> <config-file>
+```
+
+Example with runtimeConfig.json:
+
+```shell script
+docker config create dt-app-properties runtimeConfig.json
+```
