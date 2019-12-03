@@ -3,8 +3,8 @@ services:
   postgres:
     image: postgres:11-alpine
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=r00t!@#
+      - POSTGRES_USER=
+      - POSTGRES_PASSWORD=
       - POSTGRES_DB=dt
     volumes:
       - db-traffic-generator-data:/var/lib/postgresql/data
