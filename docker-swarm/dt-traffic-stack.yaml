@@ -1,0 +1,38 @@
+version: "3.7"
+services:
+  postgres:
+    image: postgres:11-alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=r00t!@#
+      - POSTGRES_DB=dt
+    volumes:
+      - db-traffic-generator-data:/var/lib/postgresql/data
+    networks:
+      bridge:
+      default:
+        aliases:
+          - traffic-generator-postgres
+
+  dt-traffic-generator:
+    image: pawbal96/dt-traffic-generator:0.0.1
+    labels:
+      - "traefik.http.routers.dt-traffic-generator.rule=PathPrefix(`/api`, `/dt-traffic-generator/swagger`)"
+    networks:
+      - bridge
+      - default
+    configs:
+      - source: dt-traffic-generator-properties
+        target: /app/appsettings.json
+
+volumes:
+  db-traffic-generator-data:
+networks:
+  bridge:
+    external: true
+    name: bridge
+  default:
+configs:
+  dt-traffic-generator-properties:
+    external: true
+    name: dt-traffic-generator-properties
