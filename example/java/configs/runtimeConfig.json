@@ -1,0 +1,5 @@
+{
+  "production": true,
+  "apiUrl": "http://java-aplint.eastus.cloudapp.azure.com/api/",
+  "testsApiUrl": "http://java-aplint.eastus.cloudapp.azure.com/testapi"
+}

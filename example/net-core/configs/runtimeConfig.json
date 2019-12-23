@@ -1,0 +1,5 @@
+{
+  "production": true,
+  "apiUrl": "http://net-core-aplint.eastus.cloudapp.azure.com/api/",
+  "testsApiUrl": "http://net-core-aplint.eastus.cloudapp.azure.com/testapi"
+}

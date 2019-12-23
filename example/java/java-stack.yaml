@@ -1,0 +1,60 @@
+version: "3.7"
+services:
+  postgres:
+    image: postgres:11-alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=example
+      - POSTGRES_DB=dt
+    volumes:
+      - db-java-data:/var/lib/postgresql/data
+    networks:
+      daytrader:
+        aliases:
+          - postgres
+
+  dt-api:
+    image: pawbal96/dt-api-java
+    labels:
+      - "traefik.http.routers.dt-api.rule=PathPrefix(`/api`, `/swagger`, `/webjars`, `/csrf`, `/v2`)"
+    networks:
+      - bridge
+      - daytrader
+    configs:
+      - source: dt-api-java-properties
+        target: /app/application.properties
+
+  dt-app:
+    image: pawbal96/dt-app
+    labels:
+      - "traefik.http.routers.dt-app.rule=PathPrefix(`/`)"
+    networks:
+      - bridge
+    configs:
+      - source: dt-app-properties
+        target: /usr/local/tomcat/webapps/ROOT/assets/runtimeConfig.json
+
+  reverse-proxy:
+    image: traefik:v2.0
+    ports:
+      - 80:80
+      - 8080:8080
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command:
+      - --providers.docker
+
+volumes:
+  db-java-data:
+networks:
+  bridge:
+    external: true
+    name: bridge
+  daytrader:
+configs:
+  dt-api-java-properties:
+    external: true
+    name: dt-api-java-properties
+  dt-app-properties:
+    external: true
+    name: dt-app-properties
