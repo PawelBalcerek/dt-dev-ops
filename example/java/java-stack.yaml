@@ -9,7 +9,7 @@ services:
     volumes:
       - db-java-data:/var/lib/postgresql/data
     networks:
-      daytrader:
+      default:
         aliases:
           - postgres
 
@@ -19,13 +19,13 @@ services:
       - "traefik.http.routers.dt-api.rule=PathPrefix(`/api`, `/swagger`, `/webjars`, `/csrf`, `/v2`)"
     networks:
       - bridge
-      - daytrader
+      - default
     configs:
       - source: dt-api-java-properties
         target: /app/application.properties
 
   dt-app:
-    image: pawbal96/dt-app
+    image: pawbal96/dt-app:0.1.0
     labels:
       - "traefik.http.routers.dt-app.rule=PathPrefix(`/`)"
     networks:
@@ -50,7 +50,7 @@ networks:
   bridge:
     external: true
     name: bridge
-  daytrader:
+  default:
 configs:
   dt-api-java-properties:
     external: true

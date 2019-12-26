@@ -28,7 +28,7 @@ services:
         target: /app/appsettings.json
 
   dt-app:
-    image: pawbal96/dt-app
+    image: pawbal96/dt-app:0.1.0
     labels:
       - "traefik.http.routers.dt-app.rule=PathPrefix(`/`)"
     networks:
