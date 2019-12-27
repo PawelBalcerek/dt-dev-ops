@@ -14,7 +14,7 @@ services:
           - traffic-generator-postgres
 
   dt-traffic-generator:
-    image: pawbal96/dt-traffic-generator:0.0.5
+    image: pawbal96/dt-traffic-generator
     labels:
       - "traefik.http.routers.dt-traffic-generator.rule=PathPrefix(`/testapi`, `/dt-traffic-generator/swagger`)"
     networks:

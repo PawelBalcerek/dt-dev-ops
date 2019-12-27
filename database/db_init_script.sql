@@ -7,19 +7,19 @@ CREATE TABLE Users (
 );
 
 CREATE TABLE Companies (
-  "id" int PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "name" varchar NOT NULL
 );
 
 CREATE TABLE Resources (
-  "id" int PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "user_id" int NOT NULL,
   "comp_id" int NOT NULL,
   "amount" int NOT NULL
 );
 
 CREATE TABLE Sell_Offers (
-  "id" int PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "resource_id" int NOT NULL,
   "amount" int NOT NULL,
   "price" numeric(10,4) NOT NULL,
@@ -29,7 +29,7 @@ CREATE TABLE Sell_Offers (
 );
 
 CREATE TABLE Buy_Offers (
-  "id" int PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "resource_id" int NOT NULL,
   "amount" int NOT NULL,
   "max_price" numeric(10,4) NOT NULL,
@@ -39,7 +39,7 @@ CREATE TABLE Buy_Offers (
 );
 
 CREATE TABLE Transactions (
-  "id" int PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "sell_offer_id" int NOT NULL,
   "buy_offer_id" int NOT NULL,
   "date" timestamp NOT NULL,
