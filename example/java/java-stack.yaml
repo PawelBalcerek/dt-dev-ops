@@ -18,8 +18,11 @@ services:
     labels:
       - "traefik.http.routers.dt-api.rule=PathPrefix(`/api`, `/swagger`, `/webjars`, `/csrf`, `/v2`)"
     networks:
-      - bridge
-      - default
+      bridge:
+      default:
+      daytrader:
+        aliases:
+          - dt-api
     configs:
       - source: dt-api-java-properties
         target: /app/application.properties
@@ -53,6 +56,9 @@ networks:
     external: true
     name: bridge
   default:
+  daytrader:
+    external: true
+    name: daytrader
 configs:
   dt-api-java-properties:
     external: true

@@ -20,6 +20,7 @@ services:
     networks:
       - bridge
       - default
+      - daytrader
     configs:
       - source: dt-traffic-generator-properties
         target: /app/appsettings.json
@@ -31,6 +32,9 @@ networks:
     external: true
     name: bridge
   default:
+  daytrader:
+    external: true
+    name: daytrader
 configs:
   dt-traffic-generator-properties:
     external: true

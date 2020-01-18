@@ -12,7 +12,7 @@ services:
       - db-net-data:/var/lib/postgresql/data
     networks:
       bridge:
-      daytrader:
+      default:
         aliases:
           - postgres
 
@@ -21,8 +21,11 @@ services:
     labels:
       - "traefik.http.routers.dt-api.rule=PathPrefix(`/api`, `/swagger`)"
     networks:
-      - bridge
-      - daytrader
+      bridge:
+      default:
+      daytrader:
+        aliases:
+          - dt-api
     configs:
       - source: dt-api-net-properties
         target: /app/appsettings.json
@@ -55,7 +58,10 @@ networks:
   bridge:
     external: true
     name: bridge
+  default:
   daytrader:
+    external: true
+    name: bridge
 configs:
   dt-api-net-properties:
     external: true
