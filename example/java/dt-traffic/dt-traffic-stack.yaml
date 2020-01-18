@@ -9,7 +9,6 @@ services:
     volumes:
       - db-traffic-generator-data:/var/lib/postgresql/data
     networks:
-      bridge:
       default:
         aliases:
           - traffic-generator-postgres
@@ -18,8 +17,8 @@ services:
     image: pawbal96/dt-traffic-generator
     labels:
       - "traefik.http.routers.dt-traffic-generator.rule=PathPrefix(`/testapi`, `/dt-traffic-generator/swagger`)"
+      - "traefik.docker.network=daytrader"
     networks:
-      - bridge
       - default
       - daytrader
     configs:
@@ -30,13 +29,8 @@ volumes:
   db-traffic-generator-data:
 networks:
   default:
-  bridge:
-    external: true
-    name: bridge
   daytrader:
     external: true
-    name: daytrader
 configs:
   dt-traffic-generator-properties:
     external: true
-    name: dt-traffic-generator-properties

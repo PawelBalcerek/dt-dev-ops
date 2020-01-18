@@ -17,8 +17,8 @@ services:
     image: pawbal96/dt-api-java
     labels:
       - "traefik.http.routers.dt-api.rule=PathPrefix(`/api`, `/swagger`, `/webjars`, `/csrf`, `/v2`)"
+      - "traefik.docker.network=daytrader"
     networks:
-      bridge:
       default:
       daytrader:
         aliases:
@@ -31,8 +31,9 @@ services:
     image: pawbal96/dt-app
     labels:
       - "traefik.http.routers.dt-app.rule=PathPrefix(`/`)"
+      - "traefik.docker.network=daytrader"
     networks:
-      - bridge
+      - daytrader
     configs:
       - source: dt-app-properties
         target: /usr/local/tomcat/webapps/ROOT/assets/runtimeConfig.json
@@ -40,7 +41,9 @@ services:
   reverse-proxy:
     image: traefik:v2.0
     labels:
-      - "docker.network=bridge"
+      - "docker.network=daytrader"
+    networks:
+      - daytrader
     ports:
       - 80:80
       - 8080:8080
@@ -48,21 +51,16 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     command:
       - --providers.docker
+      - --api.insecure=true
 
 volumes:
   db-java-data:
 networks:
-  bridge:
-    external: true
-    name: bridge
   default:
   daytrader:
     external: true
-    name: daytrader
 configs:
   dt-api-java-properties:
     external: true
-    name: dt-api-java-properties
   dt-app-properties:
     external: true
-    name: dt-app-properties
